@@ -1,20 +1,30 @@
 pipeline {
+    environment {
+        dockerImage = ''
+    }
+    
     agent any
-  
     stages {
-        stage('Build') {
+        stage('Git clone') {
             steps {
-                echo 'Build...'
+                git([url: 'https://github.com/bconfiden2/bear-jenkins.git', branch: 'main', credentialsId: 'credential-id'])
             }
         }
-        stage('Test') {
+        stage('Build Image') {
             steps {
-                echo 'Test...'
+                script {
+                    dockerImage = docker.build "bconfiden2/tmp"
+                }
             }
         }
-        stage('Deploy') {
+        stage('Push Image') {
             steps {
-                echo 'Deploy...'
+                script {
+                    docker.withRegistry('', 'dockerhub') {
+                        dockerImage.push("1.0")
+                        dockerImage.push("latest")
+                    }
+                }
             }
         }
     }
