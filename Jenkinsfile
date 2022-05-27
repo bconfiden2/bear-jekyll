@@ -31,12 +31,12 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         withCredentials([usernamePassword(credentialsId: 'credential-id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            echo "$USERNAME"
-                            echo "$PASSWORD"
-                            echo 1 >> webhook
-                            git add webhook
-                            git commit -am "commit msg - from pipeline"
-                            git push
+                            sh 'echo "$USERNAME"'
+                            sh 'echo "$PASSWORD"'
+                            sh 'echo 1 >> webhook'
+                            sh 'git add webhook'
+                            sh 'git commit -am "commit msg - from pipeline"'
+                            sh 'git push'
                         }
                     }
                 }
