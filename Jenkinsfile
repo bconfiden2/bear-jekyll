@@ -22,7 +22,22 @@ pipeline {
                 script {
                     docker.withRegistry('', 'dockerhub') {
                         dockerImage.push("1.0")
-                        dockerImage.push("latest")
+                    }
+                }
+            }
+        }
+        stage('Git push') {
+            steps {
+                script {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        withCredentials([usernamePassword(credentialsId: 'amazon', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            echo $USERNAME
+                            echo $PASSWORD
+                            echo 1 >> webhook
+                            git add webhook
+                            git commit -am "commit msg - from pipeline"
+                            git push
+                        }
                     }
                 }
             }
