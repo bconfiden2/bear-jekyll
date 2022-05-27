@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([usernamePassword(credentialsId: 'amazon', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        withCredentials([usernamePassword(credentialsId: 'credential-id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             echo $USERNAME
                             echo $PASSWORD
                             echo 1 >> webhook
