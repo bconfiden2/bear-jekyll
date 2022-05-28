@@ -33,6 +33,8 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'credential-id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh 'echo "$USERNAME"'
                             sh 'echo "$PASSWORD"'
+                            sh 'git config user.name bconfiden2'
+                            sh 'git config user.email bconfiden2@naver.com'
                             sh 'echo 1 >> webhook'
                             sh 'git add webhook'
                             sh 'git commit -am "commit msg - from pipeline"'
