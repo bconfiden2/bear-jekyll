@@ -38,7 +38,7 @@ pipeline {
                             sh 'echo 1 >> webhook'
                             sh 'git add webhook'
                             sh 'git commit -am "commit msg - from pipeline"'
-                            sh 'git push'
+                            sh 'git push -u origin main'
                         }
                     }
                 }
